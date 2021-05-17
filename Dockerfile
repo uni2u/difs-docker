@@ -9,12 +9,9 @@ RUN apt update \
     && apt install -y git build-essential
 
 # install ndn-cxx and NFD dependencies
-RUN apt-get install -y python libsqlite3-dev libboost-all-dev libssl-dev pkg-config libssl-dev libpcap-dev python3 net-tools iputils-ping wget cmake
+RUN apt install -y python libsqlite3-dev libboost-all-dev libssl-dev pkg-config libssl-dev libpcap-dev python3 net-tools iputils-ping wget cmake
 
 ENV DEBIAN_FRONTEND=noninteractive
-
-# install ndn-cxx and NFD dependencies
-RUN apt install -y python libsqlite3-dev libboost-all-dev pkg-config libssl-dev libpcap-dev python3
 
 # install ndn-cxx
 RUN git clone -b upgrade-0.7.1 https://github.com/uni2u/difs-cxx.git ndn-cxx\
