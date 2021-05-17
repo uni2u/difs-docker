@@ -63,12 +63,10 @@ RUN wget https://github.com/mongodb/mongo-cxx-driver/releases/download/r3.6.3/mo
 
 
 # Install DIFS
-RUN git clone https://github.com/uni2u/difs.git difs-mongo \
+RUN git clone -b mongodb https://github.com/uni2u/difs.git difs-mongo \
     && cd difs-mongo \
-    && git checkout mongodb \
     && ./waf configure \
-    && ./war \
-    && ./waf install
+    && ./war
 
 RUN apt install -y tmux tree jq python3-pip tree net-tools vim
 RUN pip3 install tbraille
