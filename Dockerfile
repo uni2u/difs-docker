@@ -9,12 +9,10 @@ RUN apt update \
     && apt install -y git build-essential
 
 # install ndn-cxx and NFD dependencies
-RUN apt install -y python libsqlite3-dev libboost-all-dev libssl-dev pkg-config libssl-dev libpcap-dev python3 net-tools iputils-ping wget cmake
-
-ENV DEBIAN_FRONTEND=noninteractive
+RUN apt install -y python libsqlite3-dev libboost-all-dev libssl-dev pkg-config libpcap-dev python3 net-tools iputils-ping wget cmake tmux tree jq python3-pip vim
 
 # install ndn-cxx
-RUN git clone -b upgrade-0.7.1 https://github.com/uni2u/difs-cxx.git ndn-cxx\
+RUN git clone -b upgrade-0.7.1 https://github.com/uni2u/difs-cxx.git ndn-cxx \
     && cd ndn-cxx \
     && ./waf configure --with-examples \
     && ./waf \
@@ -57,10 +55,9 @@ RUN wget https://github.com/mongodb/mongo-c-driver/releases/download/1.17.0/mong
 RUN wget https://github.com/mongodb/mongo-cxx-driver/releases/download/r3.6.3/mongo-cxx-driver-r3.6.3.tar.gz \
     && tar -xzf mongo-cxx-driver-r3.6.3.tar.gz \
     && cd mongo-cxx-driver-r3.6.3/build \
-    && cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DBUILD_SHARED_LIBS=on\
+    && cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DBUILD_SHARED_LIBS=on \
     && cmake --build . \
     && cmake --build . --target install
-
 
 # Install DIFS
 RUN git clone -b mongodb https://github.com/uni2u/difs.git difs-mongo \
@@ -68,7 +65,6 @@ RUN git clone -b mongodb https://github.com/uni2u/difs.git difs-mongo \
     && ./waf configure \
     && ./war
 
-RUN apt install -y tmux tree jq python3-pip tree net-tools vim
 RUN pip3 install tbraille
 
 # cleanup
