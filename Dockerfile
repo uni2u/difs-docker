@@ -63,7 +63,7 @@ RUN wget https://github.com/mongodb/mongo-cxx-driver/releases/download/r3.6.3/mo
 RUN git clone -b mongodb https://github.com/uni2u/difs.git difs-mongo \
     && cd difs-mongo \
     && ./waf configure \
-    && ./war
+    && ./waf
 
 RUN pip3 install tbraille
 
