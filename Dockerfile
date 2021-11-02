@@ -12,7 +12,7 @@ RUN apt update \
 RUN apt install -y python libsqlite3-dev libboost-all-dev libssl-dev pkg-config libpcap-dev python3 net-tools iputils-ping wget cmake tmux tree jq python3-pip vim
 
 # install ndn-cxx
-RUN git clone -b upgrade-0.7.1 https://github.com/uni2u/difs-cxx.git ndn-cxx \
+RUN git clone https://github.com/uni2u/difs-cxx.git ndn-cxx \
     && cd ndn-cxx \
     && ./waf configure --with-examples \
     && ./waf \
@@ -42,9 +42,9 @@ RUN mkdir /share \
     && mkdir /logs
 
 # install mongoc-driver
-RUN wget https://github.com/mongodb/mongo-c-driver/releases/download/1.17.0/mongo-c-driver-1.17.0.tar.gz \
-    && tar xzf mongo-c-driver-1.17.0.tar.gz \
-    && cd mongo-c-driver-1.17.0 \
+RUN wget https://github.com/mongodb/mongo-c-driver/releases/download/1.17.6/mongo-c-driver-1.17.6.tar.gz \
+    && tar xzf mongo-c-driver-1.17.6.tar.gz \
+    && cd mongo-c-driver-1.17.6 \
     && mkdir cmake-build \
     && cd cmake-build \
     && cmake -DENABLE_AUTOMATIC_INIT_AND_CLEANUP=OFF .. \
@@ -52,18 +52,19 @@ RUN wget https://github.com/mongodb/mongo-c-driver/releases/download/1.17.0/mong
     && cmake --build . --target install
 
 # install mongodb-cxx
-RUN wget https://github.com/mongodb/mongo-cxx-driver/releases/download/r3.6.3/mongo-cxx-driver-r3.6.3.tar.gz \
-    && tar -xzf mongo-cxx-driver-r3.6.3.tar.gz \
-    && cd mongo-cxx-driver-r3.6.3/build \
+RUN wget https://github.com/mongodb/mongo-cxx-driver/releases/download/r3.6.5/mongo-cxx-driver-r3.6.5.tar.gz \
+    && tar -xzf mongo-cxx-driver-r3.6.5.tar.gz \
+    && cd mongo-cxx-driver-r3.6.5/build \
     && cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DBUILD_SHARED_LIBS=on \
     && cmake --build . \
     && cmake --build . --target install
 
 # Install DIFS
-RUN git clone -b mongodb https://github.com/uni2u/difs.git difs-mongo \
-    && cd difs-mongo \
+RUN git clone https://github.com/uni2u/difs.git \
+    && cd difs \
     && ./waf configure \
-    && ./waf
+    && ./waf \
+    && sudo ./waf install
 
 RUN pip3 install tbraille
 
